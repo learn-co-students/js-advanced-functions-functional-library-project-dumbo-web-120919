@@ -175,22 +175,26 @@ const fi = (function() {
       } 
       // Case #2: collection is NOT sorted && there's no callback function to transform the collection
       else if (!callback) {
-        
+        //// TODAY I LEARNED:
+        // Set objects are collection of values && each value in the Set has to be unique
         return [...new Set(collection)]
 
       } 
       // Others
       else {
-
+        // create a new set to store all non-transformed unique values
         let uniqVals = new Set()
+        // create another new set to store all transformed unique values
         let modifiedVals = new Set()
 
         for (let value of collection) {
           // transform the value in the collection by calling the callback fn
           let transformedVal = callback(value)
-
+          // if the transformed value is not in modifiedVal set...
           if (!modifiedVals.has(transformedVal)) {
+            // ...add the transformed value to modifiedVal set, so there won't be duplicate values
             modifiedVals.add(transformedVal)
+            // ...add the original (non-transformed) value to non-transformed set
             uniqVals.add(value)
           }
 
